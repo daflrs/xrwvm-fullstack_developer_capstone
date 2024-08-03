@@ -80,13 +80,35 @@ app.get('/fetchDealers/:state', async (req, res) => {
 
 // Express route to fetch dealer by a particular id
 app.get('/fetchDealer/:id', async (req, res) => {
-//Write your code here
   try {
-    const documents = await Dealerships.find({id: req.params.id});
+    const documents = await Dealerships.find({ id: req.params.id });
     res.json(documents);
   } catch (error) {
-    res.status(500).json({ error: 'Error fetching documents' });
+    res.status(500).json({ error: 'Error fetching dealers by ID' });
   }
+});
+
+// Express route to fetch reviews by car make
+app.get('/fetchReviews/car/:carmake', async (req, res) => {
+    try {
+      const carMake = req.params.carmake;
+      const documents = await Reviews.find({ car_make: carMake });
+      res.json(documents);
+    } catch (error) {
+      res.status(500).json({ error: 'Error fetching reviews by car make' });
+    }
+  });
+  
+// Express route to fetch reviews by car make and model
+app.get('/fetchReviews/car/:carmake/:model', async (req, res) => {
+try {
+    const carMake = req.params.carmake;
+    const carModel = req.params.model;
+    const documents = await Reviews.find({ car_make: carMake, car_model: carModel });
+    res.json(documents);
+} catch (error) {
+    res.status(500).json({ error: 'Error fetching reviews by car make and model' });
+}
 });
 
 //Express route to insert review
